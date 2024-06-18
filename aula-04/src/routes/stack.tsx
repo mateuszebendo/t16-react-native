@@ -1,7 +1,18 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import {
+  NativeStackNavigationProp,
+  createNativeStackNavigator,
+} from "@react-navigation/native-stack";
 import Home from "../screens/Home";
+import Perfil from "../screens/Perfil";
 
-const { Navigator, Screen } = createNativeStackNavigator();
+type StackNavigation = {
+  Home: undefined;
+  Perfil: { id: number | string };
+};
+
+export type StackTypes = NativeStackNavigationProp<StackNavigation>;
+
+const { Navigator, Screen } = createNativeStackNavigator<StackNavigation>();
 
 const StackComponent = () => {
   return (
@@ -13,7 +24,7 @@ const StackComponent = () => {
       />
       <Screen
         name="Perfil"
-        component={Home}
+        component={Perfil}
         options={{ title: "Meu Perfil" }}
       />
     </Navigator>
