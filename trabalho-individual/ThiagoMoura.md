@@ -1,1 +1,1 @@
-https://github.com/ThiagoSausmikat/TrabalhoIndividualReactNative
+https://github.com/ThiagoSausmikat/trabalho-individual-react-native
