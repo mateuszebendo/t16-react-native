@@ -18,6 +18,7 @@ const Feed = ({ route }: FeedProps) => {
       const { data } = await axios.get(
         "https://api.thecatapi.com/v1/images/search"
       );
+      console.log(data);
       setCat(data[0]);
     } catch (err) {
       console.log(err);
