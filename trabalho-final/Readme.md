@@ -1,5 +1,7 @@
 ### Aplicativo de Gerenciamento de Ecommerce
 
+**_Entrega e Apresentação dia 26/06/2024_**
+
 O Aplicativo será usado para gerenciar os produtos e deve ser protegido com login e senha.
 
 premissas:
