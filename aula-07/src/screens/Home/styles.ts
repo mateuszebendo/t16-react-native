@@ -5,4 +5,10 @@ export const styles = StyleSheet.create({
     flex: 1,
     marginTop: 30,
   },
+  listItem: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
+    marginVertical: 16,
+  },
 });
