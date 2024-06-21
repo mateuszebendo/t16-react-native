@@ -11,4 +11,8 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 16,
     marginVertical: 16,
   },
+  listIconContainer: {
+    flexDirection: "row",
+    gap: 10,
+  },
 });

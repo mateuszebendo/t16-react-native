@@ -13,6 +13,7 @@ import {
   deleteTaskbyId,
   getAllTasks,
   postNewTask,
+  updateTask,
 } from "../../services/tasksClient";
 import { Tasks } from "../../types";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -23,6 +24,16 @@ const Home = () => {
   const [isLoading, setLoading] = useState<boolean>(true);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [isEditing, setEditing] = useState({
+    isEdit: false,
+    id: "0",
+  });
+  // const [taskData, setTaskData] = useState<Tasks>({
+  //   id: "1",
+  //   title: "string",
+  //   description: "string",
+  //   status: "string",
+  // })
 
   // async function fetchData(){}
   const getTasks = async () => {
@@ -63,6 +74,45 @@ const Home = () => {
     }
   };
 
+  const editTask = (task: Tasks) => {
+    setEditing({
+      isEdit: true,
+      id: String(task.id),
+    });
+    setTitle(task.title);
+    setDescription(task.description);
+  };
+
+  const saveEditedTask = async () => {
+    const editedTask = {
+      title: title,
+      description: description,
+    };
+    try {
+      const updatedTask = await updateTask(isEditing.id, editedTask);
+      setAllTasks(
+        allTasks.map((item) => {
+          if (item.id === isEditing.id) {
+            return updatedTask;
+          }
+          return item;
+        })
+      );
+      cancelEdit();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const cancelEdit = () => {
+    setTitle("");
+    setDescription("");
+    setEditing({
+      isEdit: false,
+      id: "0",
+    });
+  };
+
   useEffect(() => {
     getTasks();
   }, []);
@@ -90,7 +140,14 @@ const Home = () => {
           value={description}
           onChangeText={setDescription}
         />
-        <Button title="adicionar tarefa" onPress={postTask} />
+        {isEditing.isEdit ? (
+          <View style={{ gap: 8 }}>
+            <Button title="salvar" onPress={saveEditedTask} />
+            <Button title="cancelar" onPress={cancelEdit} />
+          </View>
+        ) : (
+          <Button title="adicionar tarefa" onPress={postTask} />
+        )}
       </View>
       <FlatList
         data={allTasks}
@@ -98,9 +155,14 @@ const Home = () => {
         renderItem={({ item }) => (
           <View style={styles.listItem}>
             <Text>{item.title}</Text>
-            <TouchableOpacity onPress={() => deleteTask(item.id)}>
-              <FontAwesome5 name="trash-alt" size={24} color="black" />
-            </TouchableOpacity>
+            <View style={styles.listIconContainer}>
+              <TouchableOpacity onPress={() => editTask(item)}>
+                <FontAwesome5 name="edit" size={24} color="black" />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => deleteTask(item.id)}>
+                <FontAwesome5 name="trash-alt" size={24} color="black" />
+              </TouchableOpacity>
+            </View>
           </View>
         )}
       />
