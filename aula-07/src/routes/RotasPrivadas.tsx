@@ -1,11 +1,13 @@
-import { View, Text } from "react-native";
-import React from "react";
+import { createStackNavigator } from "@react-navigation/stack";
+import Home from "../screens/Home";
+
+const { Navigator, Screen } = createStackNavigator();
 
 const RotasPrivadas = () => {
   return (
-    <View>
-      <Text>RotasPrivadas</Text>
-    </View>
+    <Navigator>
+      <Screen name="Home" component={Home} />
+    </Navigator>
   );
 };
 

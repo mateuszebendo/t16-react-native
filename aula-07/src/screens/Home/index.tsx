@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { styles } from "./styles";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   deleteTaskbyId,
   getAllTasks,
@@ -18,6 +18,7 @@ import {
 import { Tasks } from "../../types";
 import { FontAwesome5 } from "@expo/vector-icons";
 import api from "../../services/api";
+import { AuthCtx } from "../../contexts/AuthCtx";
 
 const Home = () => {
   const [allTasks, setAllTasks] = useState<Tasks[]>([]);
@@ -28,6 +29,8 @@ const Home = () => {
     isEdit: false,
     id: "0",
   });
+
+  const { logout } = useContext(AuthCtx);
   // const [taskData, setTaskData] = useState<Tasks>({
   //   id: "1",
   //   title: "string",
@@ -148,6 +151,7 @@ const Home = () => {
         ) : (
           <Button title="adicionar tarefa" onPress={postTask} />
         )}
+        <Button title="LOGOUT" onPress={logout} />
       </View>
       <FlatList
         data={allTasks}
